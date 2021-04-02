@@ -1,8 +1,5 @@
 package ovh.excale.discord;
 
-import com.jagrosh.jdautilities.command.CommandClient;
-import com.jagrosh.jdautilities.command.CommandClientBuilder;
-import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -10,7 +7,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ovh.excale.discord.commands.BaseCommand;
+import ovh.excale.discord.listeners.MemberJoinListener;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -18,14 +15,17 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class BaseDiscordBot {
+public class BetaReplacerBot {
+
+	// [Invite link]
+	// https://discord.com/api/oauth2/authorize?client_id=827329778213584916&permissions=134217728&scope=bot
 
 	public static final Logger logger;
 	public static final String VERSION;
 	public static final String OWNER;
 	public static final String[] CO_OWNERS;
 
-	private static final Class<BaseDiscordBot> selfClass = BaseDiscordBot.class;
+	private static final Class<BetaReplacerBot> selfClass = BetaReplacerBot.class;
 	private static final transient String TOKEN;
 	private static JDA jda;
 
@@ -76,21 +76,15 @@ public class BaseDiscordBot {
 
 	public static void main(String[] args) {
 
-		CommandClient client = new CommandClientBuilder().setOwnerId(OWNER)
-				.addCommands(new BaseCommand())
-				.setCoOwnerIds(CO_OWNERS)
-				.setActivity(Activity.listening("excale"))
-				.setPrefix("bot:")
-				.build();
-
 		try {
 
-			jda = JDABuilder.create(TOKEN, GatewayIntent.GUILD_MESSAGES)
+			jda = JDABuilder.create(TOKEN, GatewayIntent.GUILD_MEMBERS)
 					.disableCache(CacheFlag.ACTIVITY,
 							CacheFlag.VOICE_STATE,
 							CacheFlag.EMOTE,
 							CacheFlag.CLIENT_STATUS)
-					.addEventListeners(new EventWaiter(), client)
+					.setActivity(Activity.listening("members | beta:help"))
+					.addEventListeners(new MemberJoinListener())
 					.build()
 					.awaitReady();
 
@@ -99,7 +93,7 @@ public class BaseDiscordBot {
 			System.exit(-1);
 		}
 
-		logger.info("Bot running on version {}.", VERSION);
+		logger.info("Bot running on version {}", VERSION);
 
 	}
 

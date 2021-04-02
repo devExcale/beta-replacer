@@ -6,10 +6,10 @@
 
 	<groupId>ovh.excale</groupId>
 	<artifactId>beta-replacer</artifactId>
-	<version>1.0.0</version>
+	<version>1.0</version>
 
 	<name>BetaReplacer</name>
-	<description>A Discord Bot that replaces your initial letter with beta when you join a guild.</description>
+	<description>A Discord Bot that replaces your initial letter with β when you join a guild.</description>
 	<url>https://github.com/Cr4zy5kyU/beta-replacer</url>
 	<packaging>jar</packaging>
 
@@ -17,7 +17,6 @@
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jda.utilities.version>3.0.5</jda.utilities.version>
 	</properties>
 
 	<dependencies>
@@ -31,27 +30,13 @@
 		<dependency>
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
-			<version>4.2.0_168</version>
+			<version>4.2.0_222</version>
 			<exclusions>
 				<exclusion>
 					<groupId>club.minnced</groupId>
 					<artifactId>opus-java</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>com.jagrosh</groupId>
-			<artifactId>jda-utilities-commons</artifactId>
-			<version>${jda.utilities.version}</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.jagrosh</groupId>
-			<artifactId>jda-utilities-command</artifactId>
-			<version>${jda.utilities.version}</version>
-			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>
@@ -89,7 +74,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>ovh.excale.discord.BaseDiscordBot</mainClass>
+							<mainClass>ovh.excale.discord.BetaReplacerBot</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
